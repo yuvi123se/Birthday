@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Nandini</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Poppins:wght@300;400;500;600&display=swap');
+
+  :root{
+    --night: #150c28;
+    --night-deep: #0b0618;
+    --marigold: #f5a623;
+    --marigold-soft: #f8c974;
+    --magenta: #d84a7b;
+    --cream: #fbf1e2;
+    --plum: #3a2350;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{
+    height:100%;
+    background: var(--night-deep);
+    font-family:'Poppins',sans-serif;
+    color:var(--cream);
+    overflow-x:hidden;
+  }
+
+  #sky{ position:fixed; inset:0; z-index:0; }
+
+  .constellation{
+    position:absolute;
+    top:6%;
+    left:50%;
+    transform:translateX(-50%);
+    width:180px;
+    height:200px;
+    z-index:1;
+    opacity:0.9;
+  }
+
+  .constellation path{
+    fill:none;
+    stroke:var(--marigold-soft);
+    stroke-width:1.2;
+    stroke-dasharray:400;
+    stroke-dashoffset:400;
+    animation: draw 3.5s ease forwards 0.5s;
+    opacity:0.55;
+  }
+
+  .constellation circle{
+    fill:var(--marigold-soft);
+    opacity:0;
+    animation: starIn 0.6s ease forwards;
+  }
+
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes starIn{ to{ opacity:1; } }
+
+  .wrap{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:220px 20px 80px;
+    text-align:center;
+  }
+
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:var(--marigold-soft);
+    margin-bottom:18px;
+    opacity:0;
+    animation: fadeUp 1s ease forwards 3.6s;
+  }
+
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:clamp(38px, 9vw, 66px);
+    line-height:1.05;
+    color:var(--cream);
+    margin-bottom:6px;
+    opacity:0;
+    animation: fadeUp 1s ease forwards 3.9s;
+  }
+
+  h1 span{ color:var(--marigold); font-style:italic; }
+
+  .sub{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:clamp(17px,4vw,21px);
+    color:var(--marigold-soft);
+    margin-bottom:44px;
+    opacity:0;
+    animation: fadeUp 1s ease forwards 4.2s;
+  }
+
+  .diya-stage{
+    position:relative;
+    width:180px;
+    height:220px;
+    margin-bottom:8px;
+    opacity:0;
+    animation: fadeUp 1.2s ease forwards 4.4s;
+    cursor:pointer;
+  }
+
+  .glow{
+    position:absolute;
+    top:18px; left:50%;
+    transform:translateX(-50%);
+    width:140px; height:140px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.55) 0%, rgba(245,166,35,0.12) 45%, transparent 70%);
+    filter:blur(4px);
+    animation: glowPulse 3s ease-in-out infinite;
+    transition: all 0.6s ease;
+  }
+
+  .flame{
+    position:absolute;
+    top:38px; left:50%;
+    transform:translateX(-50%);
+    width:16px; height:34px;
+    background: linear-gradient(to top, var(--magenta), var(--marigold) 55%, #fff7dc 90%);
+    border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+    box-shadow: 0 0 18px 4px rgba(245,166,35,0.8);
+    animation: flicker 2.4s ease-in-out infinite;
+    transform-origin: bottom center;
+    transition: box-shadow 0.6s ease;
+  }
+
+  .diya-body{ position:absolute; bottom:20px; left:50%; transform:translateX(-50%); width:130px; height:46px; }
+  .diya-body svg{ width:100%; height:100%; display:block; }
+
+  .wish-hint{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    color:rgba(248,201,116,0.6);
+    margin-bottom:36px;
+    opacity:0;
+    animation: fadeUp 1s ease forwards 5s;
+    min-height:20px;
+    transition: opacity 0.4s ease;
+  }
+
+  @keyframes flicker{
+    0%,100%{ transform:translateX(-50%) rotate(-2deg) scaleY(1); }
+    25%{ transform:translateX(-50%) rotate(2deg) scaleY(1.05); }
+    50%{ transform:translateX(-50%) rotate(-1deg) scaleY(0.96); }
+    75%{ transform:translateX(-50%) rotate(3deg) scaleY(1.03); }
+  }
+  @keyframes glowPulse{
+    0%,100%{ opacity:0.75; transform:translateX(-50%) scale(1); }
+    50%{ opacity:1; transform:translateX(-50%) scale(1.08); }
+  }
+  .flare .flame{ box-shadow: 0 0 38px 12px rgba(245,166,35,1); }
+  .flare .glow{ width:200px; height:200px; }
+
+  .card{
+    max-width:500px;
+    background: linear-gradient(180deg, rgba(58,35,80,0.55), rgba(21,12,40,0.55));
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius:18px;
+    padding:36px 30px;
+    backdrop-filter: blur(6px);
+    opacity:0;
+    animation: fadeUp 1s ease forwards 5.3s;
+  }
+
+  .card p{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(17px,4vw,20px);
+    line-height:1.8;
+    color:var(--cream);
+    margin-bottom:20px;
+    text-align:left;
+  }
+  .card p:last-child{ margin-bottom:0; }
+  .card p.center{ text-align:center; }
+
+  .highlight{ color:var(--marigold-soft); font-weight:600; font-style:italic; }
+  .divider{
+    width:60px; height:1px;
+    background:var(--marigold-soft);
+    opacity:0.4;
+    margin:20px auto;
+  }
+
+  .signoff{
+    margin-top:40px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:19px;
+    font-style:italic;
+    color:var(--marigold-soft);
+    opacity:0;
+    animation: fadeUp 1s ease forwards 5.6s;
+  }
+  .signoff b{
+    display:block;
+    font-size:26px;
+    color:var(--cream);
+    margin-top:6px;
+    font-weight:600;
+    font-style:normal;
+  }
+
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .petal{
+    position:fixed; top:-20px; z-index:1;
+    pointer-events:none; opacity:0.85;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes fall{
+    0%{ transform: translateY(-10vh) translateX(0) rotate(0deg); }
+    100%{ transform: translateY(110vh) translateX(var(--drift)) rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation: none !important; } }
+
+  @media (max-width:480px){
+    .wrap{ padding-top:190px; }
+    .constellation{ width:140px; height:160px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="sky"></canvas>
+
+<svg class="constellation" viewBox="0 0 180 200">
+  <path d="M20 180 L20 20 L160 180 L160 20"/>
+  <circle cx="20" cy="180" r="2.4" style="animation-delay:0.6s"/>
+  <circle cx="20" cy="130" r="1.8" style="animation-delay:1.3s"/>
+  <circle cx="20" cy="70" r="2" style="animation-delay:1.9s"/>
+  <circle cx="20" cy="20" r="2.6" style="animation-delay:2.4s"/>
+  <circle cx="70" cy="90" r="1.8" style="animation-delay:2.7s"/>
+  <circle cx="110" cy="130" r="1.8" style="animation-delay:3s"/>
+  <circle cx="160" cy="180" r="2.4" style="animation-delay:3.2s"/>
+  <circle cx="160" cy="130" r="1.8" style="animation-delay:3.35s"/>
+  <circle cx="160" cy="70" r="2" style="animation-delay:3.5s"/>
+  <circle cx="160" cy="20" r="2.6" style="animation-delay:3.6s"/>
+</svg>
+
+<div class="wrap">
+
+  <div class="eyebrow">a thread that never snapped</div>
+  <h1>Happy Birthday,<br><span>Nandini</span></h1>
+  <div class="sub">— my sister, by choice and by proof —</div>
+
+  <div class="diya-stage" id="diya">
+    <div class="glow"></div>
+    <div class="flame"></div>
+    <div class="diya-body">
+      <svg viewBox="0 0 130 46" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="65" cy="10" rx="60" ry="10" fill="#3a2350" stroke="#f5a623" stroke-width="1.5" opacity="0.9"/>
+        <path d="M5 10 Q10 44 65 44 Q120 44 125 10" fill="#2a1840" stroke="#f5a623" stroke-width="1.5" opacity="0.9"/>
+        <ellipse cx="65" cy="10" rx="46" ry="6" fill="#150c28"/>
+      </svg>
+    </div>
+  </div>
+  <div class="wish-hint" id="wishHint">tap the diya and make a wish</div>
+
+  <div class="card">
+    <p>I've watched whole servers I built with my own hands get torn down overnight. People I trusted disappeared the moment things got hard. That's just how most of it goes — people show up for the good part and leave before the rebuilding starts.</p>
+    <p>You never did that. Not once, not even quietly. Every single time something I'd made came apart, you were still there the next morning, like it never occurred to you that leaving was an option.</p>
+    <div class="divider"></div>
+    <p>I don't think you know how rare that is. Most people call themselves family and mean it only when it's easy. You've never once made me feel like your support had a condition attached to it.</p>
+    <p>So today, on your day, I'm not just saying happy birthday. I'm saying: <span class="highlight">I see you.</span> I see every time you stayed when you didn't have to. I see you as the reason "online sister" stopped being a small thing and started meaning something closer to actual family.</p>
+    <p class="center">I hope this year hands you back a fraction of the steadiness you've given me — good people, real peace, and things that don't come crashing down.</p>
+  </div>
+
+  <div class="signoff">
+    with more gratitude than I know how to say out loud,
+    <b>your brother, Tyagi 🪔</b>
+  </div>
+
+</div>
+
+<script>
+  const canvas = document.getElementById('sky');
+  const ctx = canvas.getContext('2d');
+  let w, h, stars = [];
+
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const starCount = Math.floor((w*h)/9000);
+  for(let i=0;i<starCount;i++){
+    stars.push({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: Math.random()*1.4+0.3,
+      phase: Math.random()*Math.PI*2,
+      speed: 0.005 + Math.random()*0.015
+    });
+  }
+
+  function drawStars(t){
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = '#0b0618';
+    ctx.fillRect(0,0,w,h);
+    for(const s of stars){
+      const tw = 0.5 + 0.5*Math.sin(t*s.speed + s.phase);
+      ctx.globalAlpha = 0.3 + tw*0.7;
+      ctx.fillStyle = tw > 0.6 ? '#f8c974' : '#fbf1e2';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(drawStars);
+  }
+  requestAnimationFrame(drawStars);
+
+  const colors = ['#f5a623','#d84a7b','#f8c974'];
+  for(let i=0;i<18;i++){
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    const size = 6 + Math.random()*7;
+    petal.style.left = Math.random()*100 + 'vw';
+    petal.style.width = size + 'px';
+    petal.style.height = size*0.7 + 'px';
+    petal.style.background = colors[Math.floor(Math.random()*colors.length)];
+    petal.style.borderRadius = '50% 0 50% 0';
+    petal.style.setProperty('--drift', (Math.random()*80-40) + 'px');
+    petal.style.animationDuration = (8 + Math.random()*10) + 's';
+    petal.style.animationDelay = (Math.random()*10) + 's';
+    document.body.appendChild(petal);
+  }
+
+  const diya = document.getElementById('diya');
+  const hint = document.getElementById('wishHint');
+  let wished = false;
+  diya.addEventListener('click', () => {
+    diya.classList.add('flare');
+    setTimeout(() => diya.classList.remove('flare'), 900);
+    if(!wished){
+      wished = true;
+      hint.style.opacity = 0;
+      setTimeout(() => {
+        hint.textContent = 'whatever you wished for — I hope life gives you double';
+        hint.style.opacity = 1;
+      }, 400);
+    }
+  });
+</script>
+
+</body>
+</html>
